@@ -14,7 +14,7 @@ namespace SomeCompany.WebApi.Controllers
         #region Get
 
         //GET /api/departments/get/{id}
-        [HttpGet("get/{id:int:min(1)}")]
+        [HttpGet("get/{id:int}")]
         [ProducesResponseType(typeof(DepartmentInfoDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetDepartment(int id)
         {
