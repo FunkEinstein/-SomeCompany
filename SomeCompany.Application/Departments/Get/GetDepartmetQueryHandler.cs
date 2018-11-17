@@ -1,19 +1,19 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using SomeCompany.Application.Base;
-using SomeCompany.Application.Departments.Dto;
+using SomeCompany.Application.Departments.ResponseDto;
 using SomeCompany.Application.Exceptions;
 using SomeCompany.Database;
 
 namespace SomeCompany.Application.Departments.Get
 {
-    public class GetDepartmentQueryHandler : HandlerBase<GetDepartmentQuery, DepartmentDto>
+    public class GetDepartmentQueryHandler : HandlerBase<GetDepartmentQuery, DepartmentInfoDto>
     {
         public GetDepartmentQueryHandler(CompanyDbContext dbContext) 
             : base(dbContext)
         { }
 
-        public override async Task<DepartmentDto> Handle(GetDepartmentQuery request, CancellationToken cancellationToken)
+        public override async Task<DepartmentInfoDto> Handle(GetDepartmentQuery request, CancellationToken cancellationToken)
         {
             var departmentId = request.Id;
             var department = await DbContext.Departments.FindAsync(departmentId);
@@ -21,7 +21,8 @@ namespace SomeCompany.Application.Departments.Get
             if (department == null)
                 throw new DepartmentNotFoundException(departmentId);
 
-            return new DepartmentDto(department);
+            var departmentDto = department.ToDepartmentDto();
+            return departmentDto;
         }
     }
 }

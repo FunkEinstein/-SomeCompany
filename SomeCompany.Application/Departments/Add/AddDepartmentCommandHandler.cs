@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using SomeCompany.Application.Base;
-using SomeCompany.Application.Departments.Dto;
 using SomeCompany.Database;
 using SomeCompany.Domain.Entities;
 
@@ -15,8 +14,7 @@ namespace SomeCompany.Application.Departments.Add
 
         public override async Task<int> Handle(AddDepartmentCommand request, CancellationToken cancellationToken)
         {
-            var departmentDto = request.Department;
-            var department = CreateDepartment(departmentDto);
+            var department = CreateDepartment(request);
 
             DbContext.Departments.Add(department);
             await DbContext.SaveChangesAsync(cancellationToken);
@@ -24,11 +22,11 @@ namespace SomeCompany.Application.Departments.Add
             return department.Id;
         }
 
-        private static Department CreateDepartment(DepartmentDto departmentDto)
+        private static Department CreateDepartment(AddDepartmentCommand request)
         {
             var department = new Department
             {
-                DepartmentName = departmentDto.DepartmentName
+                DepartmentName = request.DepartmentName
             };
 
             return department;

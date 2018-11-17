@@ -15,14 +15,13 @@ namespace SomeCompany.Application.Departments.Update
 
         public override async Task<Unit> Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
         {
-            var departmentDto = request.Department;
-            var departmentId = departmentDto.Id;
+            var departmentId = request.Id;
             var department = await DbContext.Departments.FindAsync(departmentId);
 
             if (department == null)
                 throw new DepartmentNotFoundException(departmentId);
 
-            department.DepartmentName = departmentDto.DepartmentName;
+            department.DepartmentName = request.DepartmentName;
             await DbContext.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
