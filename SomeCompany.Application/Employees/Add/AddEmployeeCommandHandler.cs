@@ -24,7 +24,7 @@ namespace SomeCompany.Application.Employees.Add
 
             var departmentId = request.DepartmentId;
             var department = await DbContext.Departments.FindAsync(departmentId);
-            if (department != null)
+            if (department == null)
                 throw new DepartmentNotFoundException(departmentId);
 
             var employee = CreateEmployee(request);

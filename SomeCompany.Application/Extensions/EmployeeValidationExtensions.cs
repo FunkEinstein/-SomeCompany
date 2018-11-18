@@ -23,13 +23,16 @@ namespace SomeCompany.Application.Extensions
         public static IRuleBuilderOptions<T, int> ApplyEmployeeSalaryRules<T>(this IRuleBuilder<T, int> builderOptions)
         {
             return builderOptions
-                .GreaterThan(0).WithMessage("Salary must be greater than zero");
+                .GreaterThan(0)
+                .WithMessage("Salary must be greater than zero");
         }
 
         public static IRuleBuilderOptions<T, DateTime> ApplyEmployeeHiredRules<T>(this IRuleBuilder<T, DateTime> builderOptions)
         {
             return builderOptions
-                .LessThanOrEqualTo(DateTime.Today).WithMessage("Hired date can't be in feature");
+                .GreaterThan(default(DateTime))
+                .LessThanOrEqualTo(DateTime.Today)
+                .WithMessage("Hired date can't be empty or date feature");
         }
     }
 }
