@@ -12,16 +12,6 @@ namespace SomeCompany.Database
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
 
-        // todo delete
-//         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//         {
-//             if (!optionsBuilder.IsConfigured)
-//             {
-// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                 optionsBuilder.UseSqlServer("Data Source=viacheslav;Initial Catalog=Company;Integrated Security=True");
-//             }
-//         }
-
         // todo move building in different types
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,7 +41,7 @@ namespace SomeCompany.Database
                     .IsRequired();
 
                 entity.HasOne(d => d.Department)
-                    .WithMany(p => p.Employee)
+                    .WithMany(p => p.Employees)
                     .HasForeignKey(d => d.DepartmentId)
                     .HasConstraintName("FK__Employee__Depart__3B75D760");
             });

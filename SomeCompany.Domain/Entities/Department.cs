@@ -6,12 +6,12 @@ namespace SomeCompany.Domain.Entities
     {
         public Department()
         {
-            Employee = new HashSet<Employee>();
+            Employees = new HashSet<Employee>();
         }
 
         public int Id { get; set; }
         public string DepartmentName { get; set; }
 
-        public ICollection<Employee> Employee { get; set; }
+        public ICollection<Employee> Employees { get; set; }
     }
 }

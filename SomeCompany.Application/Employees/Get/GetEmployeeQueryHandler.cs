@@ -20,6 +20,10 @@ namespace SomeCompany.Application.Employees.Get
             if (employee == null)
                 throw new EmployeeNotFoundException(id);
 
+            var reference = DbContext.Entry(employee).Reference(e => e.Department);
+            if (!reference.IsLoaded)
+                await reference.LoadAsync(cancellationToken);
+
             var employeeInfo = employee.ToEmployeeInfoDto();
             return employeeInfo;
         }

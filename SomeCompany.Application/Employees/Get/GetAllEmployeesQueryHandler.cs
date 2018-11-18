@@ -28,6 +28,7 @@ namespace SomeCompany.Application.Employees.Get
                 .Where(e => Filter(e, request))
                 .Skip(skipRows)
                 .Take(rowsOnPage)
+                .Include(e => e.Department)
                 .Select(e => e.ToEmployeeInfoDto())
                 .ToListAsync(cancellationToken);
 
