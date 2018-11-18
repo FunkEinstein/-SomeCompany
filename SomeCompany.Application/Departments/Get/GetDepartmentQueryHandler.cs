@@ -7,7 +7,7 @@ using SomeCompany.Database;
 
 namespace SomeCompany.Application.Departments.Get
 {
-    public class GetDepartmentQueryHandler : HandlerBase<GetDepartmentQuery, DepartmentInfoDto>
+    public class GetDepartmentQueryHandler : DbRequestHandlerBase<GetDepartmentQuery, DepartmentInfoDto>
     {
         public GetDepartmentQueryHandler(CompanyDbContext dbContext) 
             : base(dbContext)
@@ -17,12 +17,11 @@ namespace SomeCompany.Application.Departments.Get
         {
             var departmentId = request.Id;
             var department = await DbContext.Departments.FindAsync(departmentId);
-
             if (department == null)
                 throw new DepartmentNotFoundException(departmentId);
 
-            var departmentDto = department.ToDepartmentDto();
-            return departmentDto;
+            var departmentInfo = department.ToDepartmentInfoDto();
+            return departmentInfo;
         }
     }
 }

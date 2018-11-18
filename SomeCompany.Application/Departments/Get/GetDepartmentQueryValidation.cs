@@ -8,7 +8,7 @@ namespace SomeCompany.Application.Departments.Get
         public GetDepartmentQueryValidation()
         {
             RuleFor(c => c.Id)
-                .ApplyDepartmentIdRules();
+                .ApplyIdRules();
         }
     }
 }

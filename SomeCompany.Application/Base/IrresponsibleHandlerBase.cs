@@ -5,7 +5,7 @@ using SomeCompany.Database;
 
 namespace SomeCompany.Application.Base
 {
-    public abstract class IrresponsibleHandlerBase<TRequest> : HandlerBase<TRequest, Unit> 
+    public abstract class IrresponsibleHandlerBase<TRequest> : DbRequestHandlerBase<TRequest, Unit> 
         where TRequest : IRequest
     {
         protected IrresponsibleHandlerBase(CompanyDbContext dbContext)

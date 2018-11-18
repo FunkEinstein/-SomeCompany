@@ -17,7 +17,6 @@ namespace SomeCompany.Application.Departments.Delete
         {
             var departmentId = request.Id;
             var department = await DbContext.Departments.FindAsync(departmentId);
-
             if (department == null)
                 throw new DepartmentNotFoundException(departmentId);
 

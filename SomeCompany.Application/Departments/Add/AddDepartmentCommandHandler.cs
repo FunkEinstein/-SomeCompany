@@ -6,7 +6,7 @@ using SomeCompany.Domain.Entities;
 
 namespace SomeCompany.Application.Departments.Add
 {
-    public class AddDepartmentCommandHandler : HandlerBase<AddDepartmentCommand, int>
+    public class AddDepartmentCommandHandler : DbRequestHandlerBase<AddDepartmentCommand, int>
     {
         public AddDepartmentCommandHandler(CompanyDbContext dbContext)
             : base(dbContext)

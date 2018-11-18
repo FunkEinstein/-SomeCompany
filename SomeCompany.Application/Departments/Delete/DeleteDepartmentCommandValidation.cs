@@ -8,7 +8,7 @@ namespace SomeCompany.Application.Departments.Delete
         public DeleteDepartmentCommandValidation()
         {
             RuleFor(c => c.Id)
-                .ApplyDepartmentIdRules();
+                .ApplyIdRules();
         }
     }
 }

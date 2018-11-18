@@ -4,6 +4,7 @@ using MediatR;
 using SomeCompany.Application.Base;
 using SomeCompany.Application.Exceptions;
 using SomeCompany.Database;
+using SomeCompany.Domain.Entities;
 
 namespace SomeCompany.Application.Departments.Update
 {
@@ -21,10 +22,15 @@ namespace SomeCompany.Application.Departments.Update
             if (department == null)
                 throw new DepartmentNotFoundException(departmentId);
 
-            department.DepartmentName = request.DepartmentName;
+            UpdateDepartment(department, request);
             await DbContext.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
+        }
+
+        private static void UpdateDepartment(Department department, UpdateDepartmentCommand request)
+        {
+            department.DepartmentName = request.DepartmentName;
         }
     }
 }

@@ -10,10 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Employees\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SomeCompany.Database\SomeCompany.Database.csproj" />
     <ProjectReference Include="..\SomeCompany.Domain\SomeCompany.Domain.csproj" />
   </ItemGroup>

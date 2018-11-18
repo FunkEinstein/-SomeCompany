@@ -9,7 +9,7 @@ using SomeCompany.Domain.Entities;
 
 namespace SomeCompany.Application.Departments.Get
 {
-    public class GetAllDepartmentsQueryHandler : HandlerBase<GetAllDepartmentsQuery, AllDepartmentsDto>
+    public class GetAllDepartmentsQueryHandler : DbRequestHandlerBase<GetAllDepartmentsQuery, AllDepartmentsDto>
     {
         public GetAllDepartmentsQueryHandler(CompanyDbContext dbContext) 
             : base(dbContext)
@@ -26,11 +26,11 @@ namespace SomeCompany.Application.Departments.Get
                 .Where(d => Filter(d, filter))
                 .Skip(skipRows)
                 .Take(rowsOnPage)
-                .Select(d => d.ToDepartmentDto())
+                .Select(d => d.ToDepartmentInfoDto())
                 .ToListAsync(cancellationToken);
 
-            var allDepartmentsDto = new AllDepartmentsDto(departments);
-            return allDepartmentsDto;
+            var allDepartmentsInfo = new AllDepartmentsDto(departments);
+            return allDepartmentsInfo;
         }
 
         private static bool Filter(Department department, string filter)

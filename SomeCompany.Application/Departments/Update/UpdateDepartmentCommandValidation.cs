@@ -8,7 +8,7 @@ namespace SomeCompany.Application.Departments.Update
         public UpdateDepartmentCommandValidation()
         {
             RuleFor(c => c.Id)
-                .ApplyDepartmentIdRules();
+                .ApplyIdRules();
 
             RuleFor(c => c.DepartmentName)
                 .ApplyDepartmentNameRules();

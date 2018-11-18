@@ -5,12 +5,12 @@ using SomeCompany.Database;
 
 namespace SomeCompany.Application.Base
 {
-    public abstract class HandlerBase<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
+    public abstract class DbRequestHandlerBase<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
         protected readonly CompanyDbContext DbContext;
 
-        protected HandlerBase(CompanyDbContext dbContext)
+        protected DbRequestHandlerBase(CompanyDbContext dbContext)
         {
             DbContext = dbContext;
         }
