@@ -22,15 +22,16 @@ namespace SomeCompany.Application.Employees.Get
             var rowsOnPage = request.RowsOnPage;
             var skipRows = (page - 1) * rowsOnPage;
 
-            var employees = await DbContext.Employees
-                .Where(e => e.DepartmentId == request.DepartmentId)
+            var employees = DbContext.Employees.Where(e => e.DepartmentId == request.DepartmentId);
+            var count = await employees.CountAsync(cancellationToken);
+            var filteredEmployees = await employees
                 .Where(e => Filter(e, request))
                 .Skip(skipRows)
                 .Take(rowsOnPage)
                 .Select(e => e.ToEmployeeInfoDto())
                 .ToListAsync(cancellationToken);
 
-            var allEmployeesInfo = new AllEmployeesDto(employees);
+            var allEmployeesInfo = new AllEmployeesDto(filteredEmployees, count);
             return allEmployeesInfo;
         }
 

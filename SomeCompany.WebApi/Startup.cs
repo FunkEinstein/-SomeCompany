@@ -10,6 +10,7 @@ using SomeCompany.Application.Departments.Get;
 using SomeCompany.Application.PipelineBehaviors;
 using SomeCompany.Database;
 using FluentValidation.AspNetCore;
+using GlobalExceptionHandler.WebApi;
 using SomeCompany.Application.Departments.Add;
 
 namespace SomeCompany.WebApi
@@ -27,17 +28,15 @@ namespace SomeCompany.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             // configure MediatR
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
-            services.AddMediatR(typeof(GetDepartmentQuery).GetTypeInfo().Assembly);
+            services.ConfigureMediatR();
 
             // configure EF
             var connectionString = Configuration.GetConnectionString("CompanyDatabase");
-            services.AddDbContext<CompanyDbContext>(b => b.UseSqlServer(connectionString));
+            services.ConfigureEntityFramework(connectionString);
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                // configure FluentValidation
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddDepartmentCommandValidation>());
+                .ConfigureFluentValidation(); // configure fluent validation
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +50,9 @@ namespace SomeCompany.WebApi
             {
                 app.UseHsts();
             }
+
+            // configure global exception handling
+            app.ConfigureGlobalExceptionHandling();
 
             app.UseHttpsRedirection();
             app.UseMvc();

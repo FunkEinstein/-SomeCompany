@@ -22,14 +22,16 @@ namespace SomeCompany.Application.Departments.Get
             var rowsOnPage = request.RowsOnPage;
             var skipRows = (page - 1) * rowsOnPage;
 
-            var departments = await DbContext.Departments
+            var departments = DbContext.Departments;
+            var count = await departments.CountAsync(cancellationToken);
+            var filteredDepartments = await departments
                 .Where(d => Filter(d, filter))
                 .Skip(skipRows)
                 .Take(rowsOnPage)
                 .Select(d => d.ToDepartmentInfoDto())
                 .ToListAsync(cancellationToken);
 
-            var allDepartmentsInfo = new AllDepartmentsDto(departments);
+            var allDepartmentsInfo = new AllDepartmentsDto(filteredDepartments, count);
             return allDepartmentsInfo;
         }
 
