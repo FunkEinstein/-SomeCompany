@@ -72,7 +72,7 @@ namespace SomeCompany.WebApi
 
         public static string ExceptionResponseBody(Exception ex)
         {
-            return JsonConvert.SerializeObject(new { ex.Message });
+            return JsonConvert.SerializeObject(new { ex.Message }, Formatting.Indented);
         }
 
         #endregion
