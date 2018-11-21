@@ -22,8 +22,8 @@ namespace SomeCompany.WebApi.Controllers
             return Ok(await Mediator.Send(getEmployeeQuery));
         }
 
-        //GET /api/employees/all
-        [HttpGet("all")]
+        //POST /api/employees/all
+        [HttpPost("all")]
         [ProducesResponseType(typeof(AllEmployeesDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllEmployees([FromBody] GetAllEmployeesQuery query)
         {

@@ -1,17 +1,8 @@
-﻿using System.Reflection;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SomeCompany.Application.Departments.Get;
-using SomeCompany.Application.PipelineBehaviors;
-using SomeCompany.Database;
-using FluentValidation.AspNetCore;
-using GlobalExceptionHandler.WebApi;
-using SomeCompany.Application.Departments.Add;
 
 namespace SomeCompany.WebApi
 {
@@ -29,6 +20,9 @@ namespace SomeCompany.WebApi
         {
             // configure MediatR
             services.ConfigureMediatR();
+
+            // configure CORS
+            services.AddClientCors();
 
             // configure EF
             var connectionString = Configuration.GetConnectionString("CompanyDatabase");
@@ -53,6 +47,9 @@ namespace SomeCompany.WebApi
 
             // configure global exception handling
             app.ConfigureGlobalExceptionHandling();
+
+            // configure CORS
+            app.UseClientCors();
 
             app.UseHttpsRedirection();
             app.UseMvc();

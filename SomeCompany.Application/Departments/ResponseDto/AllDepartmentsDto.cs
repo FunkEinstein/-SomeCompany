@@ -4,13 +4,13 @@ namespace SomeCompany.Application.Departments.ResponseDto
 {
     public class AllDepartmentsDto
     {
-        public int AllEmployees { get; set; }
+        public int AllDepartments { get; set; }
         public ICollection<DepartmentInfoDto> Departments { get; set; }
 
-        public AllDepartmentsDto(ICollection<DepartmentInfoDto> departments, int allEmployees)
+        public AllDepartmentsDto(ICollection<DepartmentInfoDto> departments, int allDepartments)
         {
             Departments = departments;
-            AllEmployees = allEmployees;
+            AllDepartments = allDepartments;
         }
     }
 }

@@ -4,7 +4,9 @@ using System.Reflection;
 using FluentValidation.AspNetCore;
 using GlobalExceptionHandler.WebApi;
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -73,6 +75,32 @@ namespace SomeCompany.WebApi
         public static string ExceptionResponseBody(Exception ex)
         {
             return JsonConvert.SerializeObject(new { ex.Message }, Formatting.Indented);
+        }
+
+        #endregion
+
+        #region Cors
+
+        private const string ClientPolicy = "ClientPolicy";
+
+        public static IServiceCollection AddClientCors(this IServiceCollection services)
+        {
+            Action<CorsPolicyBuilder> configurePolicy = builder 
+                => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+
+            services.AddCors(o => o.AddPolicy(ClientPolicy, configurePolicy));
+
+            return services;
+        }
+
+        public static IApplicationBuilder UseClientCors(this IApplicationBuilder app)
+        {
+            app.UseCors(ClientPolicy);
+
+            return app;
         }
 
         #endregion

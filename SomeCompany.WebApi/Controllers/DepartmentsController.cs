@@ -22,8 +22,8 @@ namespace SomeCompany.WebApi.Controllers
             return Ok(await Mediator.Send(getDepartmentQuery));
         }
 
-        //GET /api/departments/all
-        [HttpGet("all")]
+        //POST /api/departments/all
+        [HttpPost("all")]
         [ProducesResponseType(typeof(AllDepartmentsDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllDepartments([FromBody] GetAllDepartmentsQuery query)
         {
