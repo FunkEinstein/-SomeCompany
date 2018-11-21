@@ -10,6 +10,8 @@ export class DepartmentsTableComponent implements OnInit {
   columns: string[] = [ "id", "departmentName" ];
   departments: DepartmentInfoDto[];
 
+  selectedDepartmentId: number;
+
   constructor(private service: DepartmentsService) {
   }
   
@@ -24,5 +26,13 @@ export class DepartmentsTableComponent implements OnInit {
 
     this.service.getAllDepartments(query)
       .subscribe(departmentsDto => this.departments = departmentsDto.departments);
+  }
+
+  selectRow(row) {
+    this.selectedDepartmentId = row.id;
+  }
+
+  isSelected(row) {
+    return this.selectedDepartmentId === row.id;
   }
 }
