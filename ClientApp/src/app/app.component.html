@@ -1,2 +1,10 @@
-<h1>Departments</h1>
-<app-departments-table></app-departments-table>
+<mat-tab-group mat-align-tabs="center" 
+  [selectedIndex]="selectedTab" 
+  (selectedIndexChange)="selectedTab = $event">
+  <mat-tab label="Departments">
+    <app-departments-table (showEmployeesEvent)="onShowEmployees($event)"></app-departments-table>
+  </mat-tab>
+  <mat-tab label="Employees">
+    <app-employees-table></app-employees-table>
+  </mat-tab>
+</mat-tab-group>

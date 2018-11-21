@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { DepartmentsService, DepartmentInfoDto, GetAllDepartmentsQuery } from '../app.model';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { DepartmentInfoDto, GetAllDepartmentsQuery } from '../services/dtos/DepartmentDtos';
+import { DepartmentsService } from '../services/DepartmentsService';
 
 @Component({
   selector: 'app-departments-table',
@@ -9,8 +10,9 @@ import { DepartmentsService, DepartmentInfoDto, GetAllDepartmentsQuery } from '.
 export class DepartmentsTableComponent implements OnInit {
   columns: string[] = [ "id", "departmentName" ];
   departments: DepartmentInfoDto[];
-
   selectedDepartmentId: number;
+
+  @Output() showEmployeesEvent = new EventEmitter<number>();
 
   constructor(private service: DepartmentsService) {
   }
@@ -28,11 +30,19 @@ export class DepartmentsTableComponent implements OnInit {
       .subscribe(departmentsDto => this.departments = departmentsDto.departments);
   }
 
+  showEmployees() {
+    this.showEmployeesEvent.emit(this.selectedDepartmentId);
+  }
+
   selectRow(row) {
     this.selectedDepartmentId = row.id;
   }
 
   isSelected(row) {
     return this.selectedDepartmentId === row.id;
+  }
+
+  hasSelected() {
+    return this.selectedDepartmentId != null;
   }
 }

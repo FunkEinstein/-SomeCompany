@@ -1,3 +1,19 @@
+<!-- Buttons -->
+<div>
+
+  <div style="display: inline;">
+    <button mat-raised-button>Add</button>
+  </div>
+
+  <div *ngIf="hasSelected()" style="display: inline;">
+    <button mat-raised-button>Change</button>
+    <button mat-raised-button>Delete</button>
+    <button mat-raised-button (click)="showEmployees()">List of department's employees</button>
+  </div>
+
+</div>
+
+<!-- Departments table -->
 <table mat-table [dataSource]="departments" class="mat-elevation-z8">
 
   <ng-container matColumnDef="id">
@@ -19,4 +35,3 @@
   </tr>
 
 </table>
-  

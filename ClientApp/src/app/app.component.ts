@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { EmployeesTableComponent } from './employees-table/employees-table.component';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ClientApp';
+  selectedTab: number;
+  
+  EmployeesTabIndex = 2;
+  @ViewChild(EmployeesTableComponent) employeesComponent;
 
   constructor() { }
+
+  onShowEmployees(id: number) {
+    this.employeesComponent.loadDepartmentEmployees(id);
+    this.selectedTab = this.EmployeesTabIndex;
+  }
 }
