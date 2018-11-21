@@ -7,16 +7,21 @@ import { AppComponent } from './app.component';
 import { API_BASE_URL } from './app.model'
 import { environment } from 'src/environments/environment.prod';
 
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { DepartmentsTableComponent } from './departments-table/departments-table.component'
+
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DepartmentsTableComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule
   ],
   providers: [
     {
