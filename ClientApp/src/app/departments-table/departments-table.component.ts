@@ -1,33 +1,43 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { DepartmentInfoDto, GetAllDepartmentsQuery } from '../services/dtos/DepartmentDtos';
+import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { DepartmentInfoDto, GetAllDepartmentsQuery, AllDepartmentsDto } from '../services/dtos/DepartmentDtos';
 import { DepartmentsService } from '../services/DepartmentsService';
+import { PaginatorComponent } from '../paginator/paginator.component';
+import { PaginatorState } from '../paginator/paginator-state';
 
 @Component({
   selector: 'app-departments-table',
   templateUrl: './departments-table.component.html',
   styleUrls: ['./departments-table.component.css']
 })
-export class DepartmentsTableComponent implements OnInit {
+export class DepartmentsTableComponent {
   columns: string[] = [ "id", "departmentName" ];
   departments: DepartmentInfoDto[];
   selectedDepartmentId: number;
 
   @Output() showEmployeesEvent = new EventEmitter<number>();
 
+  @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
+
   constructor(private service: DepartmentsService) {
   }
-  
-  ngOnInit() {
-    this.loadDepartments();
+
+  paginatorStateChanged(state: PaginatorState) {
+    this.loadDepartments(state.page, state.pageSize);
   }
 
-  loadDepartments() {
+  loadDepartments(page: number, pageSize: number) {
     var query = new GetAllDepartmentsQuery();
-    query.page = 1;
-    query.rowsOnPage = 10;
+    query.page = page;
+    query.rowsOnPage = pageSize;
 
     this.service.getAllDepartments(query)
-      .subscribe(departmentsDto => this.departments = departmentsDto.departments);
+      .subscribe(data => this.initDepartments(data));
+  }
+
+  initDepartments(data: AllDepartmentsDto) {
+    this.departments = data.departments;
+    this.paginator.setLength(data.allDepartments);
+    this.resetSelection();
   }
 
   showEmployees() {
@@ -36,6 +46,10 @@ export class DepartmentsTableComponent implements OnInit {
 
   selectRow(row) {
     this.selectedDepartmentId = row.id;
+  }
+
+  resetSelection() {
+    return this.selectedDepartmentId = null;
   }
 
   isSelected(row) {

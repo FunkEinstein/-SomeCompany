@@ -1,0 +1,16 @@
+<div style="display: inline;">
+
+  <label>Page #{{page}}</label>
+
+  <button mat-button [disabled]="!isHasPreviousPage()" (click)="previousPage()">&lt;</button>
+  <button mat-button [disabled]="!isHasNextPage()"(click)="nextPage()">&gt;</button>
+
+  <mat-form-field>
+    <mat-select placeholder="Select page size" [(ngModel)]="pageSize" (selectionChange)="changePageSize($event.value)">
+      <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize">
+        {{pageSize}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>

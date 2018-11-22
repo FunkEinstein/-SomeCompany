@@ -4,32 +4,36 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { environment } from 'src/environments/environment.prod';
-
 import { HttpClientModule } from '@angular/common/http';
-import { DepartmentsTableComponent } from './departments-table/departments-table.component'
 
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTabsModule } from '@angular/material/tabs';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DepartmentsTableComponent } from './departments-table/departments-table.component'
 import { EmployeesTableComponent } from './employees-table/employees-table.component';
+import { PaginatorComponent } from './paginator/paginator.component';
+
+import { FormsModule } from "@angular/forms"
+import { MatTableModule, MatButtonModule, MatTabsModule, MatSelectModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { environment } from 'src/environments/environment.prod';
 import { API_BASE_URL } from './services/BaseService';
 
 @NgModule({
   declarations: [
     AppComponent,
     DepartmentsTableComponent,
-    EmployeesTableComponent
+    EmployeesTableComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
 
+    FormsModule,
     MatTableModule,
     MatButtonModule,
     MatTabsModule,
+    MatSelectModule,
     BrowserAnimationsModule
   ],
   providers: [

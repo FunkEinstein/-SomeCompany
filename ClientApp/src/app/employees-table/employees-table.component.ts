@@ -36,7 +36,7 @@ export class EmployeesTableComponent implements OnInit {
   }
 
   isHasEmployees() {
-    return this.employees != null;
+    return this.employees != null && this.employees.length > 0;
   }
 
   selectRow(row) {
