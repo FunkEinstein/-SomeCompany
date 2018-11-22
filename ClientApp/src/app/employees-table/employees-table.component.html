@@ -1,63 +1,57 @@
-<div *ngIf="!isHasEmployees()">
-  Haven't employees to show
-</div>
-<div *ngIf="isHasEmployees()">
-  
-  <!-- Buttons -->
-  <div>
+<!-- Buttons -->
+<div *ngIf="isInitialized()">
 
-    <div style="display: inline;">
-      <button mat-raised-button>Add</button>
-    </div>
-  
-    <div *ngIf="hasSelected()" style="display: inline;">
-      <button mat-raised-button>Change</button>
-      <button mat-raised-button>Delete</button>
-    </div>
-  
+  <div style="display: inline;">
+    <button mat-raised-button>Add</button>
   </div>
-  
-  <!-- Departments table -->
-  <table mat-table [dataSource]="employees" class="mat-elevation-z8">
-  
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> Id </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
 
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> Email </th>
-      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-    </ng-container>
+  <div *ngIf="hasSelected()" style="display: inline;">
+    <button mat-raised-button>Change</button>
+    <button mat-raised-button>Delete</button>
+  </div>
 
-    <ng-container matColumnDef="salary">
-      <th mat-header-cell *matHeaderCellDef> Salary </th>
-      <td mat-cell *matCellDef="let element"> {{element.salary}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="hired">
-      <th mat-header-cell *matHeaderCellDef> Hired </th>
-      <td mat-cell *matCellDef="let element"> {{ element.hired | date }} </td>
-    </ng-container>
-            
-    <ng-container matColumnDef="departmentName">
-      <th mat-header-cell *matHeaderCellDef> Department name </th>
-      <td mat-cell *matCellDef="let element"> {{element.departmentName}} </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="columns"></tr>
-    <tr mat-row 
-      *matRowDef="let row; columns: columns;" 
-      [ngClass]="{hovered: row.hovered, highlighted: isSelected(row)}" 
-      (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"
-      (click)="selectRow(row)">
-    </tr>
-  
-  </table>
-  
 </div>
+
+<!-- Departments table -->
+<table mat-table [dataSource]="employees" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="salary">
+    <th mat-header-cell *matHeaderCellDef> Salary </th>
+    <td mat-cell *matCellDef="let element"> {{element.salary}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="hired">
+    <th mat-header-cell *matHeaderCellDef> Hired </th>
+    <td mat-cell *matCellDef="let element"> {{ element.hired | date }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="departmentName">
+    <th mat-header-cell *matHeaderCellDef> Department name </th>
+    <td mat-cell *matCellDef="let element"> {{element.departmentName}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <div *ngIf="isInitialized()">
+    <tr mat-row *matRowDef="let row; columns: columns;" [ngClass]="{hovered: row.hovered, highlighted: isSelected(row)}"
+      (mouseover)="row.hovered = true" (mouseout)="row.hovered = false" (click)="selectRow(row)">
+    </tr>
+  </div>
+
+</table>
+
+<app-paginator (paginatorStateChangedEvent)="paginatorStateChanged($event)"></app-paginator>

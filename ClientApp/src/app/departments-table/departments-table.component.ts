@@ -26,18 +26,19 @@ export class DepartmentsTableComponent {
   }
 
   loadDepartments(page: number, pageSize: number) {
+    this.resetSelection();
+
     var query = new GetAllDepartmentsQuery();
     query.page = page;
     query.rowsOnPage = pageSize;
 
     this.service.getAllDepartments(query)
-      .subscribe(data => this.initDepartments(data));
+      .subscribe(data => this.setData(data));
   }
 
-  initDepartments(data: AllDepartmentsDto) {
+  setData(data: AllDepartmentsDto) {
     this.departments = data.departments;
     this.paginator.setLength(data.allDepartments);
-    this.resetSelection();
   }
 
   showEmployees() {
@@ -49,7 +50,7 @@ export class DepartmentsTableComponent {
   }
 
   resetSelection() {
-    return this.selectedDepartmentId = null;
+    this.selectedDepartmentId = null;
   }
 
   isSelected(row) {

@@ -17,9 +17,12 @@ export class PaginatorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.page = 1;
-    this.pageSize = this.pageSizes[0];
+    this.resetState();
     this.emitStateChangedEvent();
+  }
+
+  firstPage() {
+    this.page = 1;
   }
 
   isHasNextPage() {
@@ -51,16 +54,18 @@ export class PaginatorComponent implements OnInit {
   }
 
   changePageSize(pageSize: number) {
-    this.page = 1;
+    this.firstPage();
     this.pageSize = pageSize;
     this.emitStateChangedEvent();
   }
 
-  emitStateChangedEvent() {
-    var state = new PaginatorState;
-    state.page = this.page;
-    state.pageSize = this.pageSize
+  resetState() {
+    this.firstPage();
+    this.pageSize = this.pageSizes[0];
+  }
 
+  emitStateChangedEvent() {
+    var state = new PaginatorState(this.page, this.pageSize);
     this.paginatorStateChangedEvent.emit(state);
   }
 

@@ -11,12 +11,12 @@ export class AppComponent {
   selectedTab: number;
   
   EmployeesTabIndex = 2;
-  @ViewChild(EmployeesTableComponent) employeesComponent;
+  @ViewChild(EmployeesTableComponent) employeesComponent: EmployeesTableComponent;
 
   constructor() { }
 
   onShowEmployees(id: number) {
-    this.employeesComponent.loadDepartmentEmployees(id);
+    this.employeesComponent.initialize(id);
     this.selectedTab = this.EmployeesTabIndex;
   }
 }
