@@ -4,7 +4,6 @@ using System.Reflection;
 using FluentValidation.AspNetCore;
 using GlobalExceptionHandler.WebApi;
 using MediatR;
-using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;

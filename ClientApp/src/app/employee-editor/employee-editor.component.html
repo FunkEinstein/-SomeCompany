@@ -1,0 +1,83 @@
+<form>
+  <div *ngIf="isEditorActive">
+
+    <mat-error *ngIf="isHasServerErrors()">
+      {{serverErrors}}
+    </mat-error>
+
+    <mat-form-field>
+      <input matInput 
+      placeholder="Name" 
+      [formControl]="nameControl" 
+      [errorStateMatcher]="matcher">
+      <mat-error *ngIf="nameControl.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput 
+        placeholder="Email" 
+        [formControl]="emailControl" 
+        [errorStateMatcher]="matcher">
+      <mat-error *ngIf="emailControl.hasError('email') && !emailControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="emailControl.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput 
+        placeholder="Salary" 
+        type="number" 
+        [formControl]="salaryControl" 
+        [errorStateMatcher]="matcher">
+      <mat-error *ngIf="salaryControl.hasError('min') && !salaryControl.hasError('required')">
+        Salary can't be <strong>less</strong> than zero
+      </mat-error>
+      <mat-error *ngIf="salaryControl.hasError('required')">
+        Salary is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput 
+        placeholder="Hired date" 
+        [max]="maxDate" 
+        [matDatepicker]="picker" 
+        [formControl]="hiredControl"
+        [errorStateMatcher]="matcher">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="hiredControl.hasError('matDatepickerMax') && !hiredControl.hasError('required')">
+        Hired date can't be from feature
+      </mat-error>
+      <mat-error *ngIf="hiredControl.hasError('required')">
+        Hired date is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput 
+        placeholder="Department id" 
+        type="number" 
+        [formControl]="departmentControl" 
+        [errorStateMatcher]="matcher">
+      <mat-error *ngIf="departmentControl.hasError('min') && !departmentControl.hasError('required')">
+        Department id can't be <strong>less</strong> than zero
+      </mat-error>
+      <mat-error *ngIf="departmentControl.hasError('required')">
+        Department id is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <br />
+    <div>
+      <button mat-raised-button *ngIf="isEditInAddMode()" (click)="sendNew()">Add</button>
+      <button mat-raised-button *ngIf="isEditInChangeMode()" (click)="sendChanged()">Change</button>
+    </div>
+
+  </div>
+</form>

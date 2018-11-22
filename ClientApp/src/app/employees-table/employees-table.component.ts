@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { EmployeeInfoDto, GetAllEmployeesQuery, AllEmployeesDto } from '../services/dtos/EmployeeDtos';
 import { EmployeesService } from '../services/EmployeesService';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { PaginatorState } from '../paginator/paginator-state';
+import { EmployeeEditorComponent } from '../employee-editor/employee-editor.component';
 
 @Component({
   selector: 'app-employees-table',
@@ -16,6 +17,7 @@ export class EmployeesTableComponent {
   selectedEmployeeId: number;
 
   @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
+  @ViewChild(EmployeeEditorComponent) editor: EmployeeEditorComponent;
 
   constructor(private service: EmployeesService) {
   }
@@ -26,7 +28,10 @@ export class EmployeesTableComponent {
 
   initialize(departmentId: number) {
     this.departmentId = departmentId;
+    this.reloadData();
+  }
 
+  reloadData() {
     if (this.paginator != null) {
       this.paginator.resetState();
       this.loadEmployees(this.paginator.page, this.paginator.pageSize);
@@ -53,13 +58,23 @@ export class EmployeesTableComponent {
     this.paginator.setLength(data.allEmployees);
   }
 
-  clearState() {
-    this.employees = null;
-    this.selectedEmployeeId = null;
-  }
-
   isInitialized() {
     return this.departmentId != null;
+  }
+
+  activateAdding() {
+    this.editor.prepareToAdd();
+    this.editor.activateEditor();
+  }
+
+  activateEditing() {
+    var employee = this.employees.find(e => e.id == this.selectedEmployeeId);
+    this.editor.prepareToChange(employee);
+    this.editor.activateEditor();
+  }
+
+  afterEditing() {
+    this.reloadData();
   }
 
   selectRow(row) {
@@ -72,5 +87,11 @@ export class EmployeesTableComponent {
 
   hasSelected() {
     return this.selectedEmployeeId != null;
+  }
+
+  clearState() {
+    this.employees = null;
+    this.selectedEmployeeId = null;
+    this.editor.deactivateEditor();
   }
 }

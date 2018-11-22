@@ -10,19 +10,32 @@ import { DepartmentsTableComponent } from './departments-table/departments-table
 import { EmployeesTableComponent } from './employees-table/employees-table.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 
-import { FormsModule } from "@angular/forms"
-import { MatTableModule, MatButtonModule, MatTabsModule, MatSelectModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { 
+  MatTableModule, 
+  MatButtonModule, 
+  MatTabsModule, 
+  MatSelectModule, 
+  MatInputModule, 
+  MatDatepickerModule,
+  MatNativeDateModule } 
+  from '@angular/material';
 
 import { environment } from 'src/environments/environment.prod';
 import { API_BASE_URL } from './services/BaseService';
+import { DepartmentEditorComponent } from './department-editor/department-editor.component';
+import { EmployeeEditorComponent } from './employee-editor/employee-editor.component';
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
     AppComponent,
     DepartmentsTableComponent,
     EmployeesTableComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    DepartmentEditorComponent,
+    EmployeeEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -30,10 +43,14 @@ import { API_BASE_URL } from './services/BaseService';
     HttpClientModule,
 
     FormsModule,
+    ReactiveFormsModule,
     MatTableModule,
     MatButtonModule,
     MatTabsModule,
     MatSelectModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     BrowserAnimationsModule
   ],
   providers: [
