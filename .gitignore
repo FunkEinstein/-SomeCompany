@@ -3,3 +3,4 @@
 .vs
 Import Schema Logs
 *.dbmdl
+*.jfm
