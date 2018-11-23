@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using SomeCompany.Application.Base;
 using SomeCompany.Application.Departments.ResponseDto;
 using SomeCompany.Application.Exceptions;
-using SomeCompany.Database;
+using SomeCompany.DatabaseProvider;
 
 namespace SomeCompany.Application.Departments.Get
 {

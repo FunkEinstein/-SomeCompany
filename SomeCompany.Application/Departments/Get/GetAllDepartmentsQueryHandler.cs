@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SomeCompany.Application.Base;
 using SomeCompany.Application.Departments.ResponseDto;
-using SomeCompany.Database;
+using SomeCompany.DatabaseProvider;
 using SomeCompany.Domain.Entities;
 
 namespace SomeCompany.Application.Departments.Get

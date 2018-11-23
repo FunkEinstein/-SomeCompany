@@ -3,6 +3,7 @@ import { DepartmentInfoDto, GetAllDepartmentsQuery, AllDepartmentsDto } from '..
 import { DepartmentsService } from '../services/DepartmentsService';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { PaginatorState } from '../paginator/paginator-state';
+import { DepartmentEditorComponent } from '../department-editor/department-editor.component';
 
 @Component({
   selector: 'app-departments-table',
@@ -17,12 +18,17 @@ export class DepartmentsTableComponent {
   @Output() showEmployeesEvent = new EventEmitter<number>();
 
   @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
+  @ViewChild(DepartmentEditorComponent) editor: DepartmentEditorComponent;
 
   constructor(private service: DepartmentsService) {
   }
 
   paginatorStateChanged(state: PaginatorState) {
     this.loadDepartments(state.page, state.pageSize);
+  }
+
+  reloadData() {
+    this.loadDepartments(this.paginator.page, this.paginator.pageSize);
   }
 
   loadDepartments(page: number, pageSize: number) {
@@ -39,6 +45,29 @@ export class DepartmentsTableComponent {
   setData(data: AllDepartmentsDto) {
     this.departments = data.departments;
     this.paginator.setLength(data.allDepartments);
+  }
+
+  activateAdding() {
+    this.editor.prepareToAdd();
+    this.editor.activateEditor();
+  }
+
+  activateEditing() {
+    var department = this.departments.find(e => e.id == this.selectedDepartmentId);
+    this.editor.prepareToChange(department);
+    this.editor.activateEditor();
+  }
+
+  afterEditing() {
+    this.reloadData();
+  }
+  
+  deleteDepartment() {
+    if (this.selectedDepartmentId == null)
+      return;
+
+    this.service.deleteDepartment(this.selectedDepartmentId)
+      .subscribe(() => this.reloadData());
   }
 
   showEmployees() {

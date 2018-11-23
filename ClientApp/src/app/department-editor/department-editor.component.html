@@ -1,5 +1,22 @@
 <form>
-  <mat-form-field>
-    <input matInput>
-  </mat-form-field>
+  <div *ngIf="isEditorActive">
+
+    <mat-error *ngIf="isHasServerErrors()">
+      {{serverErrors}}
+    </mat-error>
+
+    <mat-form-field>
+      <input matInput placeholder="Name" [formControl]="nameControl" [errorStateMatcher]="matcher">
+      <mat-error *ngIf="nameControl.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <br />
+    <div>
+      <button mat-raised-button *ngIf="isEditInAddMode()" (click)="sendNew()">Add</button>
+      <button mat-raised-button *ngIf="isEditInChangeMode()" (click)="sendChanged()">Change</button>
+    </div>
+
+  </div>
 </form>

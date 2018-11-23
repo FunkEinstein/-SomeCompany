@@ -1,4 +1,4 @@
-export class SwaggerException extends Error {
+export class RequestException extends Error {
     message: string;
     status: number;
     response: string;
@@ -15,9 +15,9 @@ export class SwaggerException extends Error {
         this.result = result;
     }
 
-    protected isSwaggerException = true;
+    protected isRequestException = true;
 
-    static isSwaggerException(obj: any): obj is SwaggerException {
+    static isRequestException(obj: any): obj is RequestException {
         return obj.isSwaggerException === true;
     }
 }

@@ -28,14 +28,12 @@ export class EmployeesTableComponent {
 
   initialize(departmentId: number) {
     this.departmentId = departmentId;
+    this.paginator.resetState();
     this.reloadData();
   }
 
   reloadData() {
-    if (this.paginator != null) {
-      this.paginator.resetState();
       this.loadEmployees(this.paginator.page, this.paginator.pageSize);
-    }
   }
 
   loadEmployees(page: number, pageSize: number) {
@@ -75,6 +73,14 @@ export class EmployeesTableComponent {
 
   afterEditing() {
     this.reloadData();
+  }
+
+  deleteEmployee() {
+    if (this.selectedEmployeeId == null)
+      return;
+
+    this.service.deleteEmployee(this.selectedEmployeeId)
+      .subscribe(() => this.reloadData());
   }
 
   selectRow(row) {

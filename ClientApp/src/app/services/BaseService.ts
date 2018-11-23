@@ -1,6 +1,6 @@
 import { Observable, throwError as _observableThrow, of as _observableOf } from "rxjs";
 import { InjectionToken } from "@angular/core";
-import { SwaggerException } from "./Exceptions";
+import { RequestException } from "./Exceptions";
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
@@ -26,6 +26,6 @@ export class BaseService {
         if (result !== null && result !== undefined)
             return _observableThrow(result);
         else
-            return _observableThrow(new SwaggerException(message, status, response, headers, null));
+            return _observableThrow(new RequestException(message, status, response, headers, null));
     }
 }

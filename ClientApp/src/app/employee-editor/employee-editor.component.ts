@@ -1,15 +1,16 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FieldErrorMatcher } from '../FieldErrorMatcher';
 import { FormControl, Validators } from '@angular/forms';
 import { EmployeeInfoDto, UpdateEmployeeCommand, AddEmployeeCommand } from '../services/dtos/EmployeeDtos';
 import { EmployeesService } from '../services/EmployeesService';
+import { RequestException } from '../services/Exceptions';
 
 @Component({
   selector: 'app-employee-editor',
   templateUrl: './employee-editor.component.html',
   styleUrls: ['./employee-editor.component.css']
 })
-export class EmployeeEditorComponent implements OnInit {
+export class EmployeeEditorComponent {
   matcher: FieldErrorMatcher;
 
   nameControl: FormControl;
@@ -27,15 +28,14 @@ export class EmployeeEditorComponent implements OnInit {
   @Output() successEditEvent = new EventEmitter();
 
   constructor(private service: EmployeesService) { 
+    var today = new Date();
+    this.maxDate = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+
     this.nameControl = new FormControl('', [Validators.required]);
     this.emailControl = new FormControl('', [Validators.required, Validators.email]);
     this.salaryControl = new FormControl('', [Validators.required, Validators.min(1)]);
-    this.maxDate = new Date();
     this.hiredControl = new FormControl(this.maxDate, [Validators.required]);
     this.departmentControl = new FormControl('', [Validators.required, Validators.min(1)]);
-  }
-
-  ngOnInit() {
   }
 
   activateEditor() {
@@ -69,7 +69,6 @@ export class EmployeeEditorComponent implements OnInit {
     this.emailControl.setValue(null);
     this.salaryControl.setValue(null);
     this.hiredControl.setValue(this.maxDate);
-    this.nameControl.setValue(null);
     this.departmentControl.setValue(null);
   }
 
@@ -78,7 +77,7 @@ export class EmployeeEditorComponent implements OnInit {
       this.emailControl.valid &&
       this.salaryControl.valid &&
       this.hiredControl.valid &&
-      this.nameControl.valid;
+      this.departmentControl.valid;
   }
 
   sendChanged() {
@@ -121,16 +120,26 @@ export class EmployeeEditorComponent implements OnInit {
     this.deactivateEditor();
   }
 
-  onError(error) {
-    this.setServerErrors(error);
+  onError(error: RequestException) {
+    this.setServerErrors(error.response);  
   }
 
   isHasServerErrors() {
     return this.serverErrors != null;
   }
 
-  setServerErrors(errors: string) {
-    this.serverErrors = errors;
+  setServerErrors(error: string) {
+    if(typeof error == 'undefined' || !error)
+      return;
+
+    var obj = JSON.parse(error);
+    var properties = Object.getOwnPropertyNames(obj);
+    var errorBuilder: string[] = new Array();
+    properties.forEach(property => {
+      errorBuilder.push(obj[property]);
+    });
+
+    this.serverErrors = errorBuilder.join("\n");
   }
 
   resetServerErrors() {

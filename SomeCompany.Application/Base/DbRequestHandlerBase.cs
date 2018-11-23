@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using SomeCompany.Database;
+using SomeCompany.DatabaseProvider;
 
 namespace SomeCompany.Application.Base
 {

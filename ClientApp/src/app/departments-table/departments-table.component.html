@@ -2,12 +2,12 @@
 <div>
 
   <div style="display: inline;">
-    <button mat-raised-button>Add</button>
+    <button mat-raised-button (click)="activateAdding()">Add</button>
   </div>
 
   <div *ngIf="hasSelected()" style="display: inline;">
-    <button mat-raised-button>Change</button>
-    <button mat-raised-button>Delete</button>
+    <button mat-raised-button (click)="activateEditing()">Change</button>
+    <button mat-raised-button (click)="deleteDepartment()">Delete</button>
     <button mat-raised-button (click)="showEmployees()">List of department's employees</button>
   </div>
 
@@ -37,3 +37,5 @@
 </table>
 
 <app-paginator (paginatorStateChangedEvent)="paginatorStateChanged($event)"></app-paginator>
+
+<app-department-editor (successEditEvent)="afterEditing()"></app-department-editor>

@@ -7,7 +7,7 @@
 
   <div *ngIf="hasSelected()" style="display: inline;">
     <button mat-raised-button (click)="activateEditing()">Change</button>
-    <button mat-raised-button>Delete</button>
+    <button mat-raised-button (click)="deleteEmployee()">Delete</button>
   </div>
 
 </div>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SomeCompany.Domain.Entities;
 
-namespace SomeCompany.Database
+namespace SomeCompany.DatabaseProvider
 {
     public class CompanyDbContext : DbContext
     {

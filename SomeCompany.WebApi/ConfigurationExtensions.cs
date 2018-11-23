@@ -13,7 +13,7 @@ using SomeCompany.Application.Departments.Add;
 using SomeCompany.Application.Departments.Get;
 using SomeCompany.Application.Exceptions;
 using SomeCompany.Application.PipelineBehaviors;
-using SomeCompany.Database;
+using SomeCompany.DatabaseProvider;
 
 namespace SomeCompany.WebApi
 {

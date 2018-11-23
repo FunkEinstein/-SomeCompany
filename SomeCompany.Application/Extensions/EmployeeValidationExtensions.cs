@@ -31,7 +31,7 @@ namespace SomeCompany.Application.Extensions
         {
             return builderOptions
                 .GreaterThan(default(DateTime))
-                .LessThanOrEqualTo(DateTime.Today)
+                .LessThanOrEqualTo(DateTime.Today.Date)
                 .WithMessage("Hired date can't be empty or date feature");
         }
     }
