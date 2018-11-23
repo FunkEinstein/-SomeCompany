@@ -4,6 +4,7 @@ import { EmployeesService } from '../services/EmployeesService';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { PaginatorState } from '../paginator/paginator-state';
 import { EmployeeEditorComponent } from '../employee-editor/employee-editor.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-employees-table',
@@ -16,10 +17,19 @@ export class EmployeesTableComponent {
   employees: EmployeeInfoDto[];
   selectedEmployeeId: number;
 
+  nameControl: FormControl;
+  emailControl: FormControl;
+  salaryControl: FormControl;
+  hiredControl: FormControl;
+
   @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
   @ViewChild(EmployeeEditorComponent) editor: EmployeeEditorComponent;
 
   constructor(private service: EmployeesService) {
+    this.nameControl = new FormControl;
+    this.emailControl = new FormControl;
+    this.salaryControl = new FormControl;
+    this.hiredControl = new FormControl;
   }
 
   paginatorStateChanged(state: PaginatorState) {
@@ -46,7 +56,16 @@ export class EmployeesTableComponent {
     query.departmentId = this.departmentId;
     query.page = page;
     query.rowsOnPage = pageSize;
-    
+
+    if (typeof this.nameControl.value != 'undefined' && this.nameControl.value)
+      query.nameFilter = this.nameControl.value;
+    if (typeof this.emailControl.value != 'undefined' && this.emailControl.value)
+      query.emailFilter = this.emailControl.value;
+    if (typeof this.salaryControl.value != 'undefined' && this.salaryControl.value)
+      query.salaryFilter = Number.parseInt(this.salaryControl.value);
+    if (typeof this.hiredControl.value != 'undefined' && this.hiredControl.value)
+      query.hiredFilter = new Date(this.hiredControl.value);
+
     this.service.getAllEmployees(query)
       .subscribe(data => this.setData(data));
   }
@@ -81,6 +100,19 @@ export class EmployeesTableComponent {
 
     this.service.deleteEmployee(this.selectedEmployeeId)
       .subscribe(() => this.reloadData());
+  }
+
+  clearFilters() {
+    this.nameControl.setValue(null);
+    this.emailControl.setValue(null);
+    this.salaryControl.setValue(null);
+    this.hiredControl.setValue(null);
+
+    this.reloadData();
+  }
+
+  activateFilter() {
+    this.reloadData();
   }
 
   selectRow(row) {

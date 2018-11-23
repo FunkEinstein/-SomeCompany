@@ -44,7 +44,7 @@ namespace SomeCompany.Application.Employees.Update
             employee.Name = request.Name;
             employee.Email = request.Email;
             employee.Salary = request.Salary;
-            employee.Hired = request.Hired;
+            employee.Hired = request.Hired.ToUniversalTime();
             employee.DepartmentId = request.DepartmentId;
         }
     }

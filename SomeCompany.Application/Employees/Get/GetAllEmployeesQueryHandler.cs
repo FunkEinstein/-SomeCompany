@@ -39,11 +39,11 @@ namespace SomeCompany.Application.Employees.Get
         private static bool Filter(Employee employee, GetAllEmployeesQuery request)
         {
             var nameFilter = request.NameFilter;
-            if (!string.IsNullOrEmpty(nameFilter) && !employee.Name.Contains(nameFilter))
+            if (!string.IsNullOrEmpty(nameFilter) && !employee.Name.Contains(nameFilter, StringComparison.InvariantCultureIgnoreCase))
                 return false;
 
             var emailFilter = request.EmailFilter;
-            if (!string.IsNullOrEmpty(emailFilter) && !employee.Email.Contains(emailFilter))
+            if (!string.IsNullOrEmpty(emailFilter) && !employee.Email.Contains(emailFilter, StringComparison.InvariantCultureIgnoreCase))
                 return false;
 
             var salaryFilter = request.SalaryFilter;

@@ -42,7 +42,7 @@ namespace SomeCompany.Application.Employees.Add
                 Name = request.Name,
                 Email = request.Email,
                 Salary = request.Salary,
-                Hired = request.Hired,
+                Hired = request.Hired.ToUniversalTime(),
                 DepartmentId = request.DepartmentId
             };
 

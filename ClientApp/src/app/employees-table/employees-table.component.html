@@ -12,6 +12,33 @@
 
 </div>
 
+<!-- Filters -->
+<div>
+  <form style="display: inline;">
+
+    <mat-form-field style="width: 23%">
+      <input matInput placeholder="Name" [formControl]="nameControl" (change)="activateFilter()">
+    </mat-form-field>
+    
+    <mat-form-field style="width: 23%">
+      <input matInput placeholder="Email" [formControl]="emailControl" (change)="activateFilter()">
+    </mat-form-field>
+    
+    <mat-form-field style="width: 23%">
+      <input matInput placeholder="Salary" type="number" [formControl]="salaryControl" (change)="activateFilter()">
+    </mat-form-field>
+    
+    <mat-form-field style="width: 23%">
+      <input matInput placeholder="Hired date" [matDatepicker]="picker" [formControl]="hiredControl" (change)="activateFilter()">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+  </form>
+
+  <button mat-button (click)="clearFilters()" style="display: inline;">Clear</button>
+</div>
+
 <!-- Departments table -->
 <table mat-table [dataSource]="employees" class="mat-elevation-z8">
 

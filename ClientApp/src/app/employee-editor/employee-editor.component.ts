@@ -28,8 +28,8 @@ export class EmployeeEditorComponent {
   @Output() successEditEvent = new EventEmitter();
 
   constructor(private service: EmployeesService) { 
-    var today = new Date();
-    this.maxDate = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+    var now = new Date();
+    this.maxDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
     this.nameControl = new FormControl('', [Validators.required]);
     this.emailControl = new FormControl('', [Validators.required, Validators.email]);
